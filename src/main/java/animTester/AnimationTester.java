@@ -1,10 +1,13 @@
 package main.java.animTester;
 
+import main.java.Controller.MouseController;
 import main.java.gfx.Animation;
 import main.java.gfx.Assets;
 import main.java.guiAndLauncher.Gui;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
@@ -21,7 +24,15 @@ public class AnimationTester implements Runnable {
     private BufferStrategy bs;
     private Graphics g;
 
-    private Animation testAnimation;
+    private Animation endTurnButtonHover, endTurnButtonIdle, endTurnButtonBloom, endTurnButtonDeBloom;
+
+
+
+    private MouseController mouseController;
+
+    private boolean hovering = false;
+
+    private Rectangle animHitBox;
 
     private Assets assets;
 
@@ -29,25 +40,42 @@ public class AnimationTester implements Runnable {
         this.width = width;
         this.height = height;
         this.title = title;
+        mouseController = new MouseController();
 
     }
 
     private void init() { //initialize the game and starting pieces/tiles
-        gui = new Gui(title, width, height);
+        gui = new Gui(mouseController, title, width, height);
+        gui.getFrame().addMouseListener(mouseController);
+        gui.getFrame().addMouseMotionListener((MouseMotionListener) mouseController);
+        gui.getCanvas().addMouseListener(mouseController);
+        gui.getCanvas().addMouseMotionListener((MouseMotionListener) mouseController);
         //load assets(images etc)
         Assets.init();
+        mouseController.setAnimationTester(this);
+
 
         //TEST ANIMATION BELOW
         // - - - - - - - - -
         // - - - - - - - - -
-        testAnimation = new Animation(250, Assets.skeleton_idle_SPRITE);
+        endTurnButtonHover = new Animation(50, Assets.endTurnButtonHover);
+        endTurnButtonIdle = new Animation(50, Assets.endTurnButtonIdle);
+        endTurnButtonBloom = new Animation(50, Assets.endTurnButtonBloom);
+        endTurnButtonDeBloom = new Animation(50, Assets.endTurnButtonDeBloom);
         // - - - - - - - - -
         // - - - - - - - - -
         // TEST ANIMATION ABOVE
     }
 
     public void tick(){
-        testAnimation.tick();
+
+        endTurnButtonDeBloom.tick();
+        endTurnButtonBloom.tick();
+        endTurnButtonIdle.tick();
+        endTurnButtonHover.tick();
+
+        animHitBox = new Rectangle(120,328, 115, 60);
+
     }
 
     public void render(Graphics g){
@@ -82,17 +110,40 @@ public class AnimationTester implements Runnable {
         g.drawImage(Assets.grassTile2[0], 240, 180, 40, 40, null);
         g.drawImage(Assets.grassTile2[0], 280, 180, 40, 40, null);
 
-        g.drawImage(testAnimation.getCurrentFrame(), 35, 30, 60, 60, null);
-        g.drawImage(testAnimation.getCurrentFrame(), 236, 128, 60, 60, null);
-        g.drawImage(testAnimation.getCurrentFrame(), 120, 328, 60, 60, null);
+        //EDIT SIZE OF ANIMATION BELOW
+//        g.drawImage(testAnimation.getCurrentFrame(), 35, 30, 115, 60, null);
+//        g.drawImage(testAnimation.getCurrentFrame(), 236, 128, 115, 60, null);
+//        g.drawImage(testAnimation.getCurrentFrame(), 120, 328, 115, 60, null);
 
-
-        //
-
+        if(hovering){
+            g.drawImage(endTurnButtonBloom.getCurrentFrame(), 120, 328, 115, 60, null);
+            endTurnButtonBloom.setLooping(false);
+            endTurnButtonDeBloom.setLooping(true);
+            if(endTurnButtonBloom.isAnimFinished()){
+                g.drawImage(endTurnButtonHover.getCurrentFrame(), 120, 328, 115, 60, null);
+            }
+        }
+        else{
+            g.drawImage(endTurnButtonDeBloom.getCurrentFrame(), 120, 328, 115, 60, null);
+            endTurnButtonDeBloom.setLooping(false);
+            if(endTurnButtonDeBloom.isAnimFinished()){
+                g.drawImage(endTurnButtonIdle.getCurrentFrame(), 120, 328, 115, 60, null);
+            }
+            endTurnButtonBloom.setLooping(true);
+        }
 
         bs.show();
         g.dispose();
     }
+
+    public void onLeftMouseRelease(MouseEvent e){
+
+    }
+
+    public void onMouseMoved(MouseEvent e){
+        hovering = (animHitBox.contains(mouseController.getHitBox()));
+    }
+
 
 
     public void run(){
@@ -152,7 +203,4 @@ public class AnimationTester implements Runnable {
         }
     }
 
-    private BufferedImage getCurrentAnimationFrame(){
-        return testAnimation.getCurrentFrame();
-    }
 }
