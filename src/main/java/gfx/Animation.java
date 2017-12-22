@@ -7,6 +7,8 @@ public class Animation {
     private int speed, index;
     private long lastTime, timer;
     private BufferedImage[] frames;
+    private boolean looping = true;
+    private boolean animFinished;
 
     public Animation(int speed, BufferedImage[] frames){
         this.speed = speed;
@@ -19,17 +21,37 @@ public class Animation {
         timer += System.currentTimeMillis() - lastTime;
         lastTime = System.currentTimeMillis();
 
-        if(timer > speed){
+        if (timer > speed) {
             index++;
             timer = 0;
-            if(index >= frames.length){
+            if (index >= frames.length && looping) {
                 index = 0;
+                animFinished = false;
+            }
+            else if (index >= frames.length && !looping) {
+                index = frames.length - 1;
+                animFinished = true;
             }
         }
     }
 
     public BufferedImage getCurrentFrame(){
         return frames[index];
+    }
+
+    public void start(){
+    }
+
+    public boolean isLooping() {
+        return looping;
+    }
+
+    public void setLooping(boolean looping) {
+        this.looping = looping;
+    }
+
+    public boolean isAnimFinished() {
+        return animFinished;
     }
 
 }

@@ -1,5 +1,6 @@
 package main.java.gfx;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Assets {
@@ -13,8 +14,13 @@ public class Assets {
     public static BufferedImage[] skeleton_idle_SPRITE;
 
     public static BufferedImage[] playButton, endTurnButton, manaBubble, actionPoints, guiOverlay, minionHealth;
+
+    public static BufferedImage[] endTurnButtonHover, endTurnButtonBloom, endTurnButtonDeBloom, endTurnButtonIdle;
+
     public static BufferedImage[] rockTile2, dirtTile2, grassTile2, card_Skeleton, card_redDragon;
 
+    //GUI OverLay
+    public static BufferedImage[] cardDock, graveYard, deckDock, activeCardDock, zoomCardDock;
 
     private static final int ACTION_POINT_WIDTH = 40;
     private static final int ACTION_POINT_HEIGHT = 31;
@@ -46,12 +52,38 @@ public class Assets {
         SpriteSheet manaBubbleSheet = new SpriteSheet(ImageLoader.loadImage("textures/manaPotionSheet.png"));
         SpriteSheet minionHealthSheet = new SpriteSheet(ImageLoader.loadImage("textures/minionHealthSheet.png"));
 
+        SpriteSheet endTurnButtonSheet = new SpriteSheet(ImageLoader.loadImage("textures/endTurnButtonSheet3.png"));
         SpriteSheet guiOverlaySheet = new SpriteSheet(ImageLoader.loadImage("textures/GUItest.png"));
+        SpriteSheet cardDockSheet = new SpriteSheet((ImageLoader.loadImage("textures/cardDockSheet.png")));
+        SpriteSheet activeCardDockSheet = new SpriteSheet((ImageLoader.loadImage("textures/activeCardDockSheet.png")));
 
         backgroundImage = ImageLoader.loadImage("textures/mBackground1500x937.png");
 
 
         //BUTTONS & MANA & MISC
+
+        cardDock = new BufferedImage[9];
+        cardDock[0] = cardDockSheet.crop(0, 0, 862, 125);
+        cardDock[1] = cardDockSheet.crop(0, 125, 862, 125);
+        cardDock[2] = cardDockSheet.crop(0, 250, 862, 125);
+        cardDock[3] = cardDockSheet.crop(0, 375, 862, 125);
+        cardDock[4] = cardDockSheet.crop(0, 500, 862, 125);
+        cardDock[5] = cardDockSheet.crop(0, 375, 862, 125);
+        cardDock[6] = cardDockSheet.crop(0, 250, 862, 125);
+        cardDock[7] = cardDockSheet.crop(0, 125, 862, 125);
+        cardDock[8] = cardDockSheet.crop(0, 0, 862, 125);
+
+        activeCardDock = new BufferedImage[9];
+        activeCardDock[0] = activeCardDockSheet.crop(0, 0, 258, 227);
+        activeCardDock[1] = activeCardDockSheet.crop(258, 0, 258, 227);
+        activeCardDock[2] = activeCardDockSheet.crop(516, 0, 258, 227);
+        activeCardDock[3] = activeCardDockSheet.crop(774, 0, 258, 227);
+        activeCardDock[4] = activeCardDockSheet.crop(1032, 0, 258, 227);
+        activeCardDock[5] = activeCardDockSheet.crop(774, 0, 258, 227);
+        activeCardDock[6] = activeCardDockSheet.crop(516, 0, 258, 227);
+        activeCardDock[7] = activeCardDockSheet.crop(258, 0, 258, 227);
+        activeCardDock[8] = activeCardDockSheet.crop(0, 0, 258, 227);
+
         guiOverlay = new BufferedImage[3];
         guiOverlay[0] = guiOverlaySheet.crop(0, 0, 1500, 937);
         guiOverlay[1] = guiOverlaySheet.crop(1500, 0, 1500, 937);
@@ -98,6 +130,81 @@ public class Assets {
         actionPoints[7] = actionPointSheet.crop(280, 0, ACTION_POINT_WIDTH, ACTION_POINT_HEIGHT);
         actionPoints[8] = actionPointSheet.crop(320, 0, ACTION_POINT_WIDTH, ACTION_POINT_HEIGHT);
         actionPoints[9] = actionPointSheet.crop(360, 0, ACTION_POINT_WIDTH, ACTION_POINT_HEIGHT);
+
+        endTurnButtonHover = new BufferedImage[56];
+        int etb3 = 0;
+        for(int i3 = 0; i3 < 7; i3++){
+            endTurnButtonHover[i3] = endTurnButtonSheet.crop(etb3, 180, 115, 60);
+            etb3 += 115;
+        }
+        int etb4 = 0;
+        for(int i4 = 7; i4 < 14; i4++){
+            endTurnButtonHover[i4] = endTurnButtonSheet.crop(etb4, 240, 115, 60);
+            etb4 += 115;
+        }
+        int etb5 = 0;
+        for(int i5 = 14; i5 < 21; i5++){
+            endTurnButtonHover[i5] = endTurnButtonSheet.crop(etb5, 300, 115, 60);
+            etb5 += 115;
+        }
+        int etb6 = 0;
+        for(int i6 = 21; i6 < 28; i6++){
+            endTurnButtonHover[i6] = endTurnButtonSheet.crop(etb6, 360, 115, 60);
+            etb6 += 115;
+        }
+        int etb7 = 0;
+        for(int i7 = 28; i7 < 35; i7++){
+            endTurnButtonHover[i7] = endTurnButtonSheet.crop(etb7, 420, 115, 60);
+            etb7 += 115;
+        }
+        int etb8 = 0;
+        for(int i8 = 35; i8 < 42; i8++){
+            endTurnButtonHover[i8] = endTurnButtonSheet.crop(etb8, 480, 115, 60);
+            etb8 += 115;
+        }
+        int etb9 = 0;
+        for(int i9 = 42; i9 < 49; i9++){
+            endTurnButtonHover[i9] = endTurnButtonSheet.crop(etb9, 540, 115, 60);
+            etb9 += 115;
+        }
+        int etb10 = 0;
+        for(int i10 = 49; i10 < 56; i10++){
+            endTurnButtonHover[i10] = endTurnButtonSheet.crop(etb10, 600, 115, 60);
+            etb10 += 115;
+        }
+
+        endTurnButtonIdle = new BufferedImage[1];
+        endTurnButtonIdle[0] = endTurnButtonSheet.crop(0, 0, 115, 60);
+
+        endTurnButtonBloom = new BufferedImage[21];
+        endTurnButtonBloom[0] = endTurnButtonSheet.crop(0, 0, 115, 60);
+        endTurnButtonBloom[1] = endTurnButtonSheet.crop(115, 0, 115, 60);
+        endTurnButtonBloom[2] = endTurnButtonSheet.crop(230, 0, 115, 60);
+        endTurnButtonBloom[3] = endTurnButtonSheet.crop(345, 0, 115, 60);
+        endTurnButtonBloom[4] = endTurnButtonSheet.crop(460, 0, 115, 60);
+        endTurnButtonBloom[5] = endTurnButtonSheet.crop(575, 0, 115, 60);
+        endTurnButtonBloom[6] = endTurnButtonSheet.crop(690, 0, 115, 60);
+        endTurnButtonBloom[7] = endTurnButtonSheet.crop(0, 60, 115, 60);
+        endTurnButtonBloom[8] = endTurnButtonSheet.crop(115, 60, 115, 60);
+        endTurnButtonBloom[9] = endTurnButtonSheet.crop(230, 60, 115, 60);
+        endTurnButtonBloom[10] = endTurnButtonSheet.crop(345, 60, 115, 60);
+        endTurnButtonBloom[11] = endTurnButtonSheet.crop(460, 60, 115, 60);
+        endTurnButtonBloom[12] = endTurnButtonSheet.crop(575, 60, 115, 60);
+        endTurnButtonBloom[13] = endTurnButtonSheet.crop(690, 60, 115, 60);
+        endTurnButtonBloom[14] = endTurnButtonSheet.crop(0, 120, 115, 60);
+        endTurnButtonBloom[15] = endTurnButtonSheet.crop(115, 120, 115, 60);
+        endTurnButtonBloom[16] = endTurnButtonSheet.crop(230, 120, 115, 60);
+        endTurnButtonBloom[17] = endTurnButtonSheet.crop(345, 120, 115, 60);
+        endTurnButtonBloom[18] = endTurnButtonSheet.crop(460, 120, 115, 60);
+        endTurnButtonBloom[19] = endTurnButtonSheet.crop(575, 120, 115, 60);
+        endTurnButtonBloom[20] = endTurnButtonSheet.crop(690, 120, 115, 60);
+
+        endTurnButtonDeBloom = new BufferedImage[5];
+        endTurnButtonDeBloom[0] = endTurnButtonSheet.crop(0, 660, 115, 60);
+        endTurnButtonDeBloom[1] = endTurnButtonSheet.crop(115, 660, 115, 60);
+        endTurnButtonDeBloom[2] = endTurnButtonSheet.crop(230, 660, 115, 60);
+        endTurnButtonDeBloom[3] = endTurnButtonSheet.crop(345, 660, 115, 60);
+        endTurnButtonDeBloom[4] = endTurnButtonSheet.crop(460, 660, 115, 60);
 
 
         //  TILES #################################################################

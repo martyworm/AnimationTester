@@ -1,5 +1,7 @@
 package main.java.guiAndLauncher;
 
+import main.java.Controller.MouseController;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,12 +11,14 @@ public class Gui {
     private Canvas canvas;
 
     private String title;
+    private MouseController mouseController;
     private int width, height;
 
-    public Gui(String title, int width, int height){
+    public Gui(MouseController mouseController, String title, int width, int height){
         this.title = title;
         this.width = width;
         this.height = height;
+        this.mouseController = mouseController;
 
         createDisplay();
     }
