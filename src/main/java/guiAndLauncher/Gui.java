@@ -1,6 +1,8 @@
 package main.java.guiAndLauncher;
 
 import main.java.Controller.MouseController;
+import main.java.gfx.Assets;
+import main.java.gfx.InvisibleTextField;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,11 +16,14 @@ public class Gui {
     private MouseController mouseController;
     private int width, height;
 
+    private InvisibleTextField tf;
+
     public Gui(MouseController mouseController, String title, int width, int height){
         this.title = title;
         this.width = width;
         this.height = height;
         this.mouseController = mouseController;
+
 
         createDisplay();
     }
@@ -33,12 +38,17 @@ public class Gui {
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
 
-
         canvas = new Canvas();
         canvas.setPreferredSize(new Dimension(width, height));
         canvas.setMaximumSize(new Dimension(width, height));
         canvas.setMinimumSize(new Dimension(width, height));
         canvas.setFocusable(false);
+
+        this.tf = new InvisibleTextField();
+        tf.setLocation(50,50);
+        tf.setEditable(true);
+        frame.add( tf );
+        //tf.requestFocusInWindow();
 
         frame.add(canvas);
         frame.pack();
@@ -52,4 +62,7 @@ public class Gui {
         return frame;
     }
 
+    public InvisibleTextField getTf() {
+        return tf;
+    }
 }

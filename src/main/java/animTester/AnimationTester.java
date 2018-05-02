@@ -3,8 +3,10 @@ package main.java.animTester;
 import main.java.Controller.MouseController;
 import main.java.gfx.Animation;
 import main.java.gfx.Assets;
+import main.java.gfx.InvisibleTextField;
 import main.java.guiAndLauncher.Gui;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
@@ -24,17 +26,11 @@ public class AnimationTester implements Runnable {
     private BufferStrategy bs;
     private Graphics g;
 
-    private Animation endTurnButtonHover, endTurnButtonIdle, endTurnButtonBloom, endTurnButtonDeBloom;
-
-
-
     private MouseController mouseController;
-
     private boolean hovering = false;
 
-    private Rectangle animHitBox;
-
     private Assets assets;
+
 
     public AnimationTester(String title, int width, int height){
         this.width = width;
@@ -50,31 +46,27 @@ public class AnimationTester implements Runnable {
         gui.getFrame().addMouseMotionListener((MouseMotionListener) mouseController);
         gui.getCanvas().addMouseListener(mouseController);
         gui.getCanvas().addMouseMotionListener((MouseMotionListener) mouseController);
+
         //load assets(images etc)
         Assets.init();
         mouseController.setAnimationTester(this);
 
-
+        //gui.getTf().setBackground(Color.decode("#056000"));
+        gui.getTf().setForeground(Color.decode("#056000"));
+        //gui.getTf().setCaretColor(Color.decode("#056000"));
+        gui.getTf().setFont(Font.getFont(Font.SERIF));
         //TEST ANIMATION BELOW
         // - - - - - - - - -
         // - - - - - - - - -
-        endTurnButtonHover = new Animation(50, Assets.endTurnButtonHover);
-        endTurnButtonIdle = new Animation(50, Assets.endTurnButtonIdle);
-        endTurnButtonBloom = new Animation(50, Assets.endTurnButtonBloom);
-        endTurnButtonDeBloom = new Animation(50, Assets.endTurnButtonDeBloom);
+
+
         // - - - - - - - - -
         // - - - - - - - - -
         // TEST ANIMATION ABOVE
     }
 
     public void tick(){
-
-        endTurnButtonDeBloom.tick();
-        endTurnButtonBloom.tick();
-        endTurnButtonIdle.tick();
-        endTurnButtonHover.tick();
-
-        animHitBox = new Rectangle(120,328, 115, 60);
+        //System.out.println(gui.getTf().getText());
 
     }
 
@@ -115,22 +107,6 @@ public class AnimationTester implements Runnable {
 //        g.drawImage(testAnimation.getCurrentFrame(), 236, 128, 115, 60, null);
 //        g.drawImage(testAnimation.getCurrentFrame(), 120, 328, 115, 60, null);
 
-        if(hovering){
-            g.drawImage(endTurnButtonBloom.getCurrentFrame(), 120, 328, 115, 60, null);
-            endTurnButtonBloom.setLooping(false);
-            endTurnButtonDeBloom.setLooping(true);
-            if(endTurnButtonBloom.isAnimFinished()){
-                g.drawImage(endTurnButtonHover.getCurrentFrame(), 120, 328, 115, 60, null);
-            }
-        }
-        else{
-            g.drawImage(endTurnButtonDeBloom.getCurrentFrame(), 120, 328, 115, 60, null);
-            endTurnButtonDeBloom.setLooping(false);
-            if(endTurnButtonDeBloom.isAnimFinished()){
-                g.drawImage(endTurnButtonIdle.getCurrentFrame(), 120, 328, 115, 60, null);
-            }
-            endTurnButtonBloom.setLooping(true);
-        }
 
         bs.show();
         g.dispose();
@@ -141,7 +117,7 @@ public class AnimationTester implements Runnable {
     }
 
     public void onMouseMoved(MouseEvent e){
-        hovering = (animHitBox.contains(mouseController.getHitBox()));
+
     }
 
 
