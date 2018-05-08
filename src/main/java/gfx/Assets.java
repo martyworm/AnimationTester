@@ -5,6 +5,10 @@ import java.awt.image.BufferedImage;
 
 public class Assets {
 
+    //Font
+    public static Font fontImmortal28, fontImmortal16, fontImmortal10, fontImmortal12, fontImmortal8, fontImmortal9, fontImmortal20;
+
+
     public static BufferedImage dirt, grass, stone, plant1, backgroundImage, redDragon, translucent;
     public static BufferedImage[] dragon_down, dragon_idle, dragon_attack;
 
@@ -37,6 +41,15 @@ public class Assets {
 
 
     public static void init(){
+
+        fontImmortal8 = FontLoader.loadFont("fonts/expressway.ttf", 8);
+        fontImmortal8 = FontLoader.loadFont("fonts/expressway.ttf", 9);
+        fontImmortal28 = FontLoader.loadFont("fonts/expressway.ttf", 28);
+        fontImmortal12 = FontLoader.loadFont("fonts/expressway.ttf", 12);
+        fontImmortal16 = FontLoader.loadFont("fonts/expressway.ttf", 16);
+        fontImmortal10 = FontLoader.loadFont("fonts/expressway.ttf", 10);
+        fontImmortal20 = FontLoader.loadFont("fonts/expressway.ttf", 20);
+
         SpriteSheet tileSheet = new SpriteSheet(ImageLoader.loadImage("textures/tileSheet.png"));
 //        SpriteSheet dragonSheet = new SpriteSheet(ImageLoader.loadImage("textures/reddragon.png"));
         SpriteSheet dragonSheet = new SpriteSheet(ImageLoader.loadImage("textures/dragonfaceSheet.png"));

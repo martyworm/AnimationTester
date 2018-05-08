@@ -3,6 +3,7 @@ package main.java.animTester;
 import main.java.Controller.MouseController;
 import main.java.gfx.Animation;
 import main.java.gfx.Assets;
+import main.java.gfx.FontLoader;
 import main.java.gfx.InvisibleTextField;
 import main.java.guiAndLauncher.Gui;
 
@@ -12,6 +13,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class AnimationTester implements Runnable {
 
@@ -51,10 +54,14 @@ public class AnimationTester implements Runnable {
         Assets.init();
         mouseController.setAnimationTester(this);
 
-        //gui.getTf().setBackground(Color.decode("#056000"));
-        gui.getTf().setForeground(Color.decode("#056000"));
-        //gui.getTf().setCaretColor(Color.decode("#056000"));
-        gui.getTf().setFont(Font.getFont(Font.SERIF));
+        Font font1 = Assets.fontImmortal12;
+        GraphicsEnvironment genv = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        genv.registerFont(font1);
+        font1 = font1.deriveFont(22f);
+
+        gui.getTf().setForeground(Color.BLACK);
+
+        gui.getTf().setFont(font1);
         //TEST ANIMATION BELOW
         // - - - - - - - - -
         // - - - - - - - - -
@@ -66,8 +73,9 @@ public class AnimationTester implements Runnable {
     }
 
     public void tick(){
-        //System.out.println(gui.getTf().getText());
-
+        if(!gui.getTf().getText().equals("")) {
+            System.out.println(gui.getTf().getText());
+        }
     }
 
     public void render(Graphics g){

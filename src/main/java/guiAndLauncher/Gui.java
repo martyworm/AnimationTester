@@ -5,6 +5,10 @@ import main.java.gfx.Assets;
 import main.java.gfx.InvisibleTextField;
 
 import javax.swing.*;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.PlainDocument;
 import java.awt.*;
 
 public class Gui {
@@ -44,9 +48,30 @@ public class Gui {
         canvas.setMinimumSize(new Dimension(width, height));
         canvas.setFocusable(false);
 
+        PlainDocument doc = new PlainDocument();
+        doc.setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void insertString(FilterBypass fb, int off, String str, AttributeSet attr)
+                    throws BadLocationException
+            {
+                fb.insertString(off, str.replaceAll("[^A-Za-z0-9 ]", ""), attr);  // remove non-digits
+            }
+            @Override
+            public void replace(FilterBypass fb, int off, int len, String str, AttributeSet attr)
+                    throws BadLocationException
+            {
+                fb.replace(off, len, str.replaceAll("[^A-Za-z0-9 ]", ""), attr);  // remove non-digits
+            }
+        });
+
         this.tf = new InvisibleTextField();
         tf.setLocation(50,50);
+        tf.setSize(100, 35);
         tf.setEditable(true);
+
+        tf.setDocument(doc);
+
+
         frame.add( tf );
         //tf.requestFocusInWindow();
 

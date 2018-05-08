@@ -4,18 +4,19 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
-import javax.swing.text.*;
 
 public class InvisibleTextField extends JTextField
         implements ActionListener, FocusListener, MouseListener, DocumentListener
 {
     public InvisibleTextField()
     {
-        setOpaque(false);
-        setColumns(10);
+        //setOpaque(false);
+        setColumns(20);
+        setBackground(Color.decode("#a3977f"));
 //      setBorder( null );
-        setSize( getPreferredSize() );
-        setColumns(10);
+        //setSize( getPreferredSize() );
+        //setSize(100, 30);
+        setColumns(20);
         addActionListener( this );
         addFocusListener( this );
         addMouseListener( this );
