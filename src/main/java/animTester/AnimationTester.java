@@ -15,6 +15,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 
 public class AnimationTester implements Runnable {
 
@@ -33,7 +34,9 @@ public class AnimationTester implements Runnable {
     private boolean hovering = false;
 
     private Assets assets;
-
+    private HashSet<String> words = new HashSet<>();
+    private boolean finishedSearching = false;
+    private String currentSearchedString = "";
 
     public AnimationTester(String title, int width, int height){
         this.width = width;
@@ -54,6 +57,8 @@ public class AnimationTester implements Runnable {
         Assets.init();
         mouseController.setAnimationTester(this);
 
+        initWords();
+
         Font font1 = Assets.fontImmortal12;
         GraphicsEnvironment genv = GraphicsEnvironment.getLocalGraphicsEnvironment();
         genv.registerFont(font1);
@@ -73,8 +78,18 @@ public class AnimationTester implements Runnable {
     }
 
     public void tick(){
-        if(!gui.getTf().getText().equals("")) {
-            System.out.println(gui.getTf().getText());
+        if(gui.getTf().getText().equals("")){
+            currentSearchedString = "";
+        }
+        if(currentSearchedString.equals("")){
+            System.out.println("current is empty string as well");
+        }
+
+        if(!gui.getTf().getText().equals("") && !finishedSearching) {
+            searchForMatches();
+        }
+        if(newSearch()){
+            finishedSearching = false;
         }
     }
 
@@ -128,7 +143,38 @@ public class AnimationTester implements Runnable {
 
     }
 
+    private boolean newSearch(){
+        if(gui.getTf().getText().equals(currentSearchedString)){
+            return false;
+        }
+        return true;
+    }
 
+    private void searchForMatches(){
+        for(String s : this.words){
+            String lowerS = s.toLowerCase();
+            if(lowerS.contains(gui.getTf().getText())){
+                System.out.println(s);
+            }
+        }
+        finishedSearching = true;
+        currentSearchedString = gui.getTf().getText();
+    }
+
+    private void initWords(){
+        this.words.add("Black Powder Goblin");
+        this.words.add("Red Dragon");
+        this.words.add("Intelligent Plant");
+        this.words.add("Skeleton");
+        this.words.add("Devouring Pact");
+        this.words.add("Transmogrify");
+        this.words.add("Fireball");
+        this.words.add("Bolt of Lightning");
+        this.words.add("Whip");
+        this.words.add("Flesh Offering");
+        this.words.add("Faith");
+
+    }
 
     public void run(){
 
